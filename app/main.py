@@ -5,7 +5,8 @@ from langchain.chat_models import init_chat_model
 from langgraph.graph import StateGraph,START,END,add_messages
 import os
 from langgraph.checkpoint.postgres import PostgresSaver
-from langchain_core.messages import AnyMessage,HumanMessage
+from langchain_core.messages import AnyMessage,HumanMessage,SystemMessage
+from prompt import MODEL_SYSTEM_PROMPT
 
 # from langchain.agents import create_agent
 load_dotenv()
@@ -22,8 +23,9 @@ class MessageState(TypedDict):
 
 #create node
 def chat_node(state:MessageState)->MessageState:
-    """Chat nodes chat"""
-    answer=model.invoke(state['messages'])
+    """Generate a response using the conversation history."""
+    messages=[SystemMessage(content=MODEL_SYSTEM_PROMPT),*state['messages']]
+    answer=model.invoke(messages)
     return {'messages':answer}
 
 graph=StateGraph(MessageState)
