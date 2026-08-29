@@ -7,6 +7,7 @@ from langgraph.prebuilt import ToolNode,tools_condition
 from langgraph.checkpoint.postgres import PostgresSaver
 from langchain_core.messages import AnyMessage,HumanMessage,SystemMessage
 from prompt import MODEL_SYSTEM_PROMPT
+from config import (GEMINI_MODEL,MODEL_PROVIDER)
 from app.tools.tools import tools
 
 # from langchain.agents import create_agent
@@ -16,7 +17,7 @@ CONFIG={'configurable':{'thread_id': "user-1"}}
 DB_URL=os.getenv('DB_URL')
 
 #model
-model=init_chat_model(model="gemini-3.5-flash-lite",model_provider="google_genai")
+model=init_chat_model(model=GEMINI_MODEL,model_provider=MODEL_PROVIDER)
 model_with_tools = model.bind_tools(tools)
 
 tool_node =ToolNode(tools)

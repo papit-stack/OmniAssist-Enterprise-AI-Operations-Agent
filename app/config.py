@@ -8,3 +8,5 @@ CHUNK_OVERLAP=50
 
 
 COHERE_RERANK_MODEL='rerank-v3.5'
+GEMINI_MODEL='gemini-3.5-flash-lite'
+MODEL_PROVIDER="google_genai"
