@@ -1,5 +1,11 @@
 from langchain_core.tools import tool
 import datetime
+from langchain_tavily import TavilySearch
+from calendar_tools import calendar_tools
+from dotenv import load_dotenv
+load_dotenv()
+
+
 @tool
 def calculator(expression: str) -> str:
     """Calculate a mathematical expression."""
@@ -16,4 +22,6 @@ def get_current_time():
     return datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 
+web_search = TavilySearch(max_results=5)
 
+tools=[calculator,get_current_time,web_search,*calendar_tools]

@@ -1,5 +1,4 @@
 from dotenv import load_dotenv
-# from pydantic import BaseModel
 from typing import TypedDict,Annotated
 from langchain.chat_models import init_chat_model
 from langgraph.graph import StateGraph,START,END,add_messages
@@ -8,7 +7,7 @@ from langgraph.prebuilt import ToolNode,tools_condition
 from langgraph.checkpoint.postgres import PostgresSaver
 from langchain_core.messages import AnyMessage,HumanMessage,SystemMessage
 from prompt import MODEL_SYSTEM_PROMPT
-from tools import calculator,get_current_time
+from tools import tools
 
 # from langchain.agents import create_agent
 load_dotenv()
@@ -18,7 +17,6 @@ DB_URL=os.getenv('DB_URL')
 
 #model
 model=init_chat_model(model="gemini-3.5-flash-lite",model_provider="google_genai")
-tools=[calculator,get_current_time]
 model_with_tools = model.bind_tools(tools)
 
 tool_node =ToolNode(tools)
@@ -32,6 +30,9 @@ def chat_node(state:MessageState)->MessageState:
     """Generate a response using the conversation history."""
     messages=[SystemMessage(content=MODEL_SYSTEM_PROMPT),*state['messages']]
     answer=model_with_tools.invoke(messages)
+    if answer.tool_calls:
+        for tool in answer.tool_calls:
+            print(f"Tool Name: {tool['name']}")
     return {'messages':[answer]}
 
 graph=StateGraph(MessageState)
@@ -52,8 +53,8 @@ with PostgresSaver.from_conn_string(DB_URL) as checkpointer:
     builder=graph.compile(checkpointer=checkpointer)
     while True:
         question=input("Enter messages: ")
-        # if not question:
-        #     continue
+        if not question:
+            continue
 
         if question.lower() in ("exit", "quit"):
             break
@@ -62,6 +63,9 @@ with PostgresSaver.from_conn_string(DB_URL) as checkpointer:
         print("AI: ",output['messages'][-1].content)
         # for message in output["messages"]:
         #     print("TYPE:", type(message).__name__)
+        #     if type(message).__name__ == "ToolMessage":
+        #         print("TOOL:", message.name)
+        #         print("CONTENT:", message.content)
         #     print("CONTENT:", message.content)
         #     print("TOOL CALLS:", getattr(message, "tool_calls", None))
         # print(builder.get_state(CONFIG))
