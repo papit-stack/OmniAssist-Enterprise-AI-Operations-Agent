@@ -31,10 +31,10 @@ def chat_node(state:MessageState)->MessageState:
     """Generate a response using the conversation history."""
     messages=[SystemMessage(content=MODEL_SYSTEM_PROMPT),*state['messages']]
     answer=model_with_tools.invoke(messages)
-    if answer.tool_calls:
-        for tool in answer.tool_calls:
-            print(f"Tool Name: {tool['name']}")
-            print("🔧 Tool Args:", tool["args"])
+    # if answer.tool_calls:
+    #     for tool in answer.tool_calls:
+    #         print(f"Tool Name: {tool['name']}")
+    #         print("🔧 Tool Args:", tool["args"])
 
     return {'messages':[answer]}
 
@@ -49,19 +49,72 @@ graph.add_edge(START,"chat_node")
 graph.add_conditional_edges("chat_node",tools_condition)
 graph.add_edge("tools", "chat_node")
 
+checkpointer_cm = PostgresSaver.from_conn_string(DB_URL)
+checkpointer = checkpointer_cm.__enter__()
+checkpointer.setup()
+builder = graph.compile(
+    checkpointer=checkpointer
+)
 
-#checkpointer
-with PostgresSaver.from_conn_string(DB_URL) as checkpointer:
-    checkpointer.setup()
-    builder=graph.compile(checkpointer=checkpointer)
+def run_agent(question: str,user_id:str):
+    config = {
+        "configurable": {
+            "thread_id": user_id
+        }
+    }
+
+    output = builder.invoke(
+        {
+            "messages": [
+                HumanMessage(content=question)
+            ]
+        },
+        config=config
+    )
+
+    return output["messages"][-1].content
+
+
+if __name__ == "__main__":
+
     while True:
-        question=input("Enter messages: ")
+
+        question = input("Enter messages: ")
+
         if not question:
             continue
 
         if question.lower() in ("exit", "quit"):
             break
-        output=builder.invoke({'messages':[HumanMessage(content=question)]},config=CONFIG)
-        print("AI: ",output['messages'][-1].content)
+
+        output = builder.invoke(
+            {
+                "messages": [
+                    HumanMessage(content=question)
+                ]
+            },
+            config=CONFIG
+        )
+
+        print(
+            "AI:",
+            output["messages"][-1].content
+        )
+
+
+
+# #checkpointer
+# with PostgresSaver.from_conn_string(DB_URL) as checkpointer:
+#     checkpointer.setup()
+#     builder=graph.compile(checkpointer=checkpointer)
+#     while True:
+#         question=input("Enter messages: ")
+#         if not question:
+#             continue
+
+#         if question.lower() in ("exit", "quit"):
+#             break
+#         output=builder.invoke({'messages':[HumanMessage(content=question)]},config=CONFIG)
+#         print("AI: ",output['messages'][-1].content)
 
 
