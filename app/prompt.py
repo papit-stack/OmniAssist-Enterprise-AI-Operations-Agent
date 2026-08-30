@@ -101,3 +101,15 @@ User query:
 Rewritten:
 "hello"
 """
+
+RAG_GENERATOR_PROMPT = """
+You are an enterprise AI assistant.
+
+Answer the user's question using only the provided context.
+
+Rules:
+- Use only information from the context.
+- Do not make up information.
+- If the answer cannot be found in the context, say that you do not have enough information.
+- Give a clear and concise answer.
+"""

@@ -8,7 +8,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 embeddings=HuggingFaceEmbeddings(model_name=EMBEDDING_MODEL)
-def retreiver():
+
+def get_retriever():
     vector_store=FAISS.load_local(VECTOR_STORE_PATH,embeddings=embeddings,allow_dangerous_deserialization=True)
     chunks=list(vector_store.docstore._dict.values())
 
@@ -23,5 +24,11 @@ def retreiver():
     return ContextualCompressionRetriever(base_retriever=hybrid_retriever,base_compressor=reranker)
 
 
+def use_retriever(query:str):
+    result=get_retriever().invoke(query)
+    context="\n".join(doc.page_content for doc in result)
+    metadata=[doc.metadata for doc in result]
+    return context,metadata
+
 if __name__=="__main__":
-    retreiver()
+    use_retriever("what are types of leave policy")

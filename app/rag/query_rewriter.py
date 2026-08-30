@@ -17,5 +17,8 @@ def rewrite_query(query:str,history: list[AnyMessage])->str:
     return response.content[0]['text']
 
 
+
+
+
 # if __name__=="__main__":
 #     rewrite_query()
