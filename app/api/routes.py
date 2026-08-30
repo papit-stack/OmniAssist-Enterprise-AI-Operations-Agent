@@ -1,5 +1,5 @@
 from fastapi import HTTPException,APIRouter
-from app.main import run_agent
+from app.agents.graph import run_agent
 
 from pydantic import BaseModel,Field
 router=APIRouter()
@@ -22,3 +22,4 @@ def chat(request: ChatRequest):
             status_code=500,
             detail="Unable to process the request."
         )
+    
