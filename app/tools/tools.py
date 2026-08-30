@@ -2,6 +2,7 @@ from langchain_core.tools import tool
 import datetime
 from langchain_tavily import TavilySearch
 from app.tools.calendar_tools import calendar_tools
+from app.rag.rag_tool import search_company_policies
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -24,4 +25,4 @@ def get_current_time():
 
 web_search = TavilySearch(max_results=5)
 
-tools=[calculator,get_current_time,web_search,*calendar_tools]
+tools=[calculator,get_current_time,web_search,*calendar_tools,search_company_policies]

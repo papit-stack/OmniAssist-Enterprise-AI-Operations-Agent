@@ -6,8 +6,8 @@ import os
 from langgraph.prebuilt import ToolNode,tools_condition
 from langgraph.checkpoint.postgres import PostgresSaver
 from langchain_core.messages import AnyMessage,HumanMessage,SystemMessage
-from prompt import MODEL_SYSTEM_PROMPT
-from config import (GEMINI_MODEL,MODEL_PROVIDER)
+from app.prompt import MODEL_SYSTEM_PROMPT
+from app.config import (GEMINI_MODEL,MODEL_PROVIDER)
 from app.tools.tools import tools
 
 # from langchain.agents import create_agent
@@ -34,6 +34,8 @@ def chat_node(state:MessageState)->MessageState:
     if answer.tool_calls:
         for tool in answer.tool_calls:
             print(f"Tool Name: {tool['name']}")
+            print("🔧 Tool Args:", tool["args"])
+
     return {'messages':[answer]}
 
 graph=StateGraph(MessageState)
@@ -59,15 +61,7 @@ with PostgresSaver.from_conn_string(DB_URL) as checkpointer:
 
         if question.lower() in ("exit", "quit"):
             break
-        
         output=builder.invoke({'messages':[HumanMessage(content=question)]},config=CONFIG)
         print("AI: ",output['messages'][-1].content)
-        # for message in output["messages"]:
-        #     print("TYPE:", type(message).__name__)
-        #     if type(message).__name__ == "ToolMessage":
-        #         print("TOOL:", message.name)
-        #         print("CONTENT:", message.content)
-        #     print("CONTENT:", message.content)
-        #     print("TOOL CALLS:", getattr(message, "tool_calls", None))
-        # print(builder.get_state(CONFIG))
+
 
