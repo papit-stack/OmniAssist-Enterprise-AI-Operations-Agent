@@ -14,7 +14,25 @@ def rewrite_query(query:str,history: list[AnyMessage])->str:
         HumanMessage(content=query),
     ]
     response = model.invoke(messages)
-    return response.content[0]['text']
+    # Handle structured content blocks as well.
+    if isinstance(response.content, list):
+        text_parts = []
+
+        for block in response.content:
+            if isinstance(block, dict):
+                text = block.get("text")
+                if text:
+                    text_parts.append(text)
+
+            elif isinstance(block, str):
+                text_parts.append(block)
+
+        rewritten_query = "".join(text_parts).strip()
+
+        if rewritten_query:
+            return rewritten_query
+
+    return query
 
 
 

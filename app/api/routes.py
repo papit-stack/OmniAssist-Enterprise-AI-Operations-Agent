@@ -14,7 +14,7 @@ def chat(request: ChatRequest):
     try:
         output = run_agent(request.query,request.user_id)
         return {
-            "answer": output
+            "answer": output['answer']
         }
     except Exception as e:
         print(f"Agent error: {e}")

@@ -4,23 +4,23 @@ test_cases = [
     # Annual Leave
     # =========================
 
-    # {
-    #     "input": "What is the annual leave policy?",
-    #     "expected_output": (
-    #         "Annual leave provides paid time off for personal or vacation purposes."
-    #     ),
-    #     "expected_retrieval_context": [
-    #         (
-    #             "Annual Leave: Paid time off for personal or vacation purposes.\n\n"
-    #             "Annual Leave\n\n"
-    #             "Employees should submit annual leave requests at least 3 working days "
-    #             "before the intended start date.\n\n"
-    #             "Annual leave is subject to manager approval and business requirements.\n\n"
-    #             "Employees should avoid scheduling leave during critical project deadlines "
-    #             "unless prior approval has been obtained."
-    #         )
-    #     ],
-    # },
+    {
+        "input": "What is the annual leave policy?",
+        "expected_output": (
+            "Annual leave provides paid time off for personal or vacation purposes."
+        ),
+        "expected_retrieval_context": [
+            (
+                "Annual Leave: Paid time off for personal or vacation purposes.\n\n"
+                "Annual Leave\n\n"
+                "Employees should submit annual leave requests at least 3 working days "
+                "before the intended start date.\n\n"
+                "Annual leave is subject to manager approval and business requirements.\n\n"
+                "Employees should avoid scheduling leave during critical project deadlines "
+                "unless prior approval has been obtained."
+            )
+        ],
+    },
 
     # {
     #     "input": "How many days in advance should I request annual leave?",
@@ -100,23 +100,23 @@ test_cases = [
     # Sick Leave
     # =========================
 
-    {
-        "input": "What is the sick leave policy?",
-        "expected_output": (
-            "Employees may take sick leave when they are unable to work due to illness "
-            "according to the company's sick leave policy."
-        ),
-        "expected_retrieval_context": [
-            (
-                "Sick Leave: Leave taken when an employee is ill or requires medical attention.\n\n"
-                "Sick Leave\n\n"
-                "Employees should notify their manager as soon as reasonably possible "
-                "when they are unable to work due to illness.\n\n"
-                "For extended periods of illness, the company may request appropriate "
-                "medical documentation in accordance with applicable law and company procedures."
-            )
-        ],
-    },
+    # {
+    #     "input": "What is the sick leave policy?",
+    #     "expected_output": (
+    #         "Employees may take sick leave when they are unable to work due to illness "
+    #         "according to the company's sick leave policy."
+    #     ),
+    #     "expected_retrieval_context": [
+    #         (
+    #             "Sick Leave: Leave taken when an employee is ill or requires medical attention.\n\n"
+    #             "Sick Leave\n\n"
+    #             "Employees should notify their manager as soon as reasonably possible "
+    #             "when they are unable to work due to illness.\n\n"
+    #             "For extended periods of illness, the company may request appropriate "
+    #             "medical documentation in accordance with applicable law and company procedures."
+    #         )
+    #     ],
+    # },
 
     # {
     #     "input": "How do I request sick leave?",
@@ -224,28 +224,28 @@ test_cases = [
     # Expense Policy
     # =========================
 
-    {
-        "input": "What expenses can employees claim?",
-        "expected_output": (
-            "Employees can claim approved business expenses incurred during official "
-            "company activities."
-        ),
-        "expected_retrieval_context": [
-            (
-                "Eligible Expenses\n\n"
-                "Reasonable and necessary expenses incurred for legitimate business "
-                "purposes may be reimbursable.\n\n"
-                "Examples include:\n\n"
-                "Business travel\n"
-                "Transportation\n"
-                "Accommodation\n"
-                "Business meals\n"
-                "Client or business meetings\n"
-                "Approved conferences and events\n"
-                "Other expenses specifically authorized by the company"
-            )
-        ],
-    },
+    # {
+    #     "input": "What expenses can employees claim?",
+    #     "expected_output": (
+    #         "Employees can claim approved business expenses incurred during official "
+    #         "company activities."
+    #     ),
+    #     "expected_retrieval_context": [
+    #         (
+    #             "Eligible Expenses\n\n"
+    #             "Reasonable and necessary expenses incurred for legitimate business "
+    #             "purposes may be reimbursable.\n\n"
+    #             "Examples include:\n\n"
+    #             "Business travel\n"
+    #             "Transportation\n"
+    #             "Accommodation\n"
+    #             "Business meals\n"
+    #             "Client or business meetings\n"
+    #             "Approved conferences and events\n"
+    #             "Other expenses specifically authorized by the company"
+    #         )
+    #     ],
+    # },
 
     # {
     #     "input": "How do I submit an expense claim?",

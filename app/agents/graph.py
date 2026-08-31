@@ -25,6 +25,8 @@ tool_node =ToolNode(tools)
 #create state
 class MessageState(TypedDict):
     messages:Annotated[list[AnyMessage],add_messages]
+    retrieval_context:list[str]
+
 
 #create node
 def chat_node(state:MessageState)->MessageState:
@@ -50,11 +52,7 @@ checkpointer.setup()
 builder = graph.compile(
     checkpointer=checkpointer
 )
-# with PostgresSaver.from_conn_string(DB_URL) as checkpointer:
-#     checkpointer.setup()
-#     builder = graph.compile(
-#     checkpointer=checkpointer
-# )
+
 
 def run_agent(question: str,user_id:str):
     config = {
@@ -71,7 +69,22 @@ def run_agent(question: str,user_id:str):
         },
         config=config
     )
+    messages = output["messages"]
+    answer = messages[-1].content
+    tool_outputs = [
+        message.content
+        for message in messages
+        if message.type == "tool"
+    ]
+    return {
+        "answer": answer,
+        "retrieval_context": tool_outputs,
+    }
 
-    return output["messages"][-1].content
-
-
+if __name__=="__main__":
+    result = run_agent(
+        question="What is the company leave policy?",
+        user_id="test-agent-001",
+    )
+    # print(result['answer'])
+    print(result['answer'][0]['text'])
