@@ -13,7 +13,7 @@ from app.tools.tools import tools
 # from langchain.agents import create_agent
 load_dotenv()
 
-CONFIG={'configurable':{'thread_id': "user-1"}}
+# CONFIG={'configurable':{'thread_id': "user-1"}}
 DB_URL=os.getenv('DB_URL')
 
 #model
@@ -76,15 +76,30 @@ def run_agent(question: str,user_id:str):
         for message in messages
         if message.type == "tool"
     ]
+
+    tools_called = []
+    # print(messages)
+    # print("="*20)
+    for message in messages:
+        if hasattr(message, "tool_calls") and message.tool_calls:
+            for tool_call in message.tool_calls:
+                tools_called.append({
+                    "name": tool_call["name"],
+                    "args": tool_call.get("args", {}),
+                })
+
+
     return {
         "answer": answer,
         "retrieval_context": tool_outputs,
+        "tools_called": tools_called
     }
 
 if __name__=="__main__":
     result = run_agent(
-        question="What is the company leave policy?",
-        user_id="test-agent-001",
+        question="list all the events on august 30?",
+        user_id="test-agent-2",
     )
-    # print(result['answer'])
-    print(result['answer'][0]['text'])
+    print(result['tools_called'])
+    # print(result['])
+    # print(result['answer'][0]['text'])
