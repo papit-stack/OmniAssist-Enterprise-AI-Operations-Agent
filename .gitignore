@@ -4,3 +4,11 @@ __pycache__/
 *.pyc
 credentials.json
 token.json
+.vscode
+.pytest_cache
+
+.deepeval/.temp-deepeval-cache.json
+.deepeval/.temp_test_run_data.json
+.deepeval/.latest_test_run.json
+.deepeval/.deepeval-cache.json
+.deepeval/.latest_run_full.json

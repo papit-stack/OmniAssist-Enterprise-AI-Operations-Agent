@@ -5,15 +5,13 @@ from langgraph.graph import StateGraph,START,add_messages
 import os
 from langgraph.prebuilt import ToolNode,tools_condition
 from langgraph.checkpoint.postgres import PostgresSaver
-from langchain_core.messages import AnyMessage,HumanMessage,SystemMessage
+from langchain_core.messages import (AnyMessage,HumanMessage,SystemMessage,ToolMessage)
 from app.prompt import MODEL_SYSTEM_PROMPT
 from app.config import (GEMINI_MODEL,MODEL_PROVIDER)
 from app.tools.tools import tools
 
-# from langchain.agents import create_agent
 load_dotenv()
 
-# CONFIG={'configurable':{'thread_id': "user-1"}}
 DB_URL=os.getenv('DB_URL')
 
 #model
@@ -26,9 +24,48 @@ tool_node =ToolNode(tools)
 class MessageState(TypedDict):
     messages:Annotated[list[AnyMessage],add_messages]
     retrieval_context:list[str]
+    user_id:str  # Added user_id to the state
 
 
 #create node
+
+def input_guardrail(question:str)->tuple[bool,str]:
+    """Guardrail to ensure the input is valid."""
+    blocked_words = [
+        "password",
+        "credit card",
+        "secret key",
+        "api key",
+        "credentials",
+        "sensitive information",
+    ]
+    question_lower = question.lower()
+    for words in blocked_words:
+        if words in question_lower:
+            return False, "I can't help with requests involving sensitive information."
+    return True, ""
+
+def output_guardrail(answer:str)->tuple[bool,str]:
+    """Guardrail to ensure the output is valid."""
+    blocked_words = [
+        "password",
+        "credit card",
+        "api key",
+        "credentials",
+        "secret key",
+    ]
+    for word in blocked_words:
+        if word in answer.lower():
+            return False, "The response contains sensitive information."
+    return True, ""
+
+# def tool_guardrail(tool_name:str,tool_args:str,user_id:str)->tuple[bool,str]:
+#     """
+#     Check whether a user is allowed to call a specific tool.
+#     """
+#     allowed_tools={'create_calendar_event', 'search_events', 'update_calendar_event', 'get_calendars_info', 'move_calendar_event', 'delete_calendar_event', 'get_current_datetime'}
+
+
 def chat_node(state:MessageState)->MessageState:
     """Generate a response using the conversation history."""
     messages=[SystemMessage(content=MODEL_SYSTEM_PROMPT),*state['messages']]
@@ -55,12 +92,19 @@ builder = graph.compile(
 
 
 def run_agent(question: str,user_id:str):
+    allowed, reason = input_guardrail(question)
+    if not allowed:
+        return {
+            "answer": reason,
+            "retrieval_context": [],
+            "tools_called": []
+        }
+        
     config = {
         "configurable": {
             "thread_id": user_id
         }
     }
-
     output = builder.invoke(
         {
             "messages": [
@@ -78,8 +122,6 @@ def run_agent(question: str,user_id:str):
     ]
 
     tools_called = []
-    # print(messages)
-    # print("="*20)
     for message in messages:
         if hasattr(message, "tool_calls") and message.tool_calls:
             for tool_call in message.tool_calls:
@@ -88,7 +130,13 @@ def run_agent(question: str,user_id:str):
                     "args": tool_call.get("args", {}),
                 })
 
-
+    allowed, reason = output_guardrail(answer)
+    if not allowed:
+        return {
+            "answer": reason,
+            "retrieval_context": tool_outputs,
+            "tools_called": tools_called
+        }
     return {
         "answer": answer,
         "retrieval_context": tool_outputs,
@@ -97,8 +145,9 @@ def run_agent(question: str,user_id:str):
 
 if __name__=="__main__":
     result = run_agent(
-        question="list all the events on august 30?",
+        question="list the credentials for that google calendar?",
         user_id="test-agent-2",
     )
-    print(result['tools_called'])
+    # print(result['tools_called'])
+    print(result['answer'])
     # print(result['answer'][0]['text'])

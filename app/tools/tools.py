@@ -17,12 +17,12 @@ def calculator(expression: str) -> str:
     except Exception:
         return "Could not calculate the expression."
 
-@tool
-def get_current_time():
-    """Get the current local date and time"""
-    return datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+# @tool
+# def get_current_time():
+#     """Get the current local date and time"""
+#     return datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 
 web_search = TavilySearch(max_results=5)
 
-tools=[calculator,get_current_time,web_search,*calendar_tools,search_company_policies]
+tools=[calculator,web_search,*calendar_tools,search_company_policies]

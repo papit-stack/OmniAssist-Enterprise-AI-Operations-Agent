@@ -4,32 +4,14 @@ test_cases = [
     # Annual Leave
     # =========================
 
-    {
-        "input": "What is the annual leave policy?",
-        "expected_output": (
-            "Annual leave provides paid time off for personal or vacation purposes."
-        ),
-        "expected_retrieval_context": [
-            (
-                "Annual Leave: Paid time off for personal or vacation purposes.\n\n"
-                "Annual Leave\n\n"
-                "Employees should submit annual leave requests at least 3 working days "
-                "before the intended start date.\n\n"
-                "Annual leave is subject to manager approval and business requirements.\n\n"
-                "Employees should avoid scheduling leave during critical project deadlines "
-                "unless prior approval has been obtained."
-            )
-        ],
-    },
-
     # {
-    #     "input": "How many days in advance should I request annual leave?",
+    #     "input": "What is the annual leave policy?",
     #     "expected_output": (
-    #         "Annual leave requests must be submitted at least 3 working days "
-    #         "before the intended start date."
+    #         "Annual leave provides paid time off for personal or vacation purposes."
     #     ),
     #     "expected_retrieval_context": [
     #         (
+    #             "Annual Leave: Paid time off for personal or vacation purposes.\n\n"
     #             "Annual Leave\n\n"
     #             "Employees should submit annual leave requests at least 3 working days "
     #             "before the intended start date.\n\n"
@@ -40,28 +22,46 @@ test_cases = [
     #     ],
     # },
 
-    # {
-    #     "input": "Who approves annual leave requests?",
-    #     "expected_output": (
-    #         "Annual leave approval depends on business requirements, team workload, "
-    #         "project deadlines, existing approved leaves, and available leave balance."
-    #     ),
-    #     "expected_retrieval_context": [
-    #         (
-    #             "Annual leave is subject to manager approval and business requirements.\n\n"
-    #             "Leave Approval\n\n"
-    #             "Submitting a leave request does not guarantee approval.\n\n"
-    #             "Managers consider:\n\n"
-    #             "Team workload\n"
-    #             "Project deadlines\n"
-    #             "Existing approved leave\n"
-    #             "Business continuity\n"
-    #             "The employee's available leave balance\n\n"
-    #             "Employees should wait for approval before making commitments "
-    #             "that depend on the leave being granted."
-    #         )
-    #     ],
-    # },
+    {
+        "input": "How many days in advance should I request annual leave?",
+        "expected_output": (
+            "Annual leave requests must be submitted at least 3 working days "
+            "before the intended start date."
+        ),
+        "expected_retrieval_context": [
+            (
+                "Annual Leave\n\n"
+                "Employees should submit annual leave requests at least 3 working days "
+                "before the intended start date.\n\n"
+                "Annual leave is subject to manager approval and business requirements.\n\n"
+                "Employees should avoid scheduling leave during critical project deadlines "
+                "unless prior approval has been obtained."
+            )
+        ],
+    },
+
+    {
+        "input": "Who approves annual leave requests?",
+        "expected_output": (
+            "Annual leave approval depends on business requirements, team workload, "
+            "project deadlines, existing approved leaves, and available leave balance."
+        ),
+        "expected_retrieval_context": [
+            (
+                "Annual leave is subject to manager approval and business requirements.\n\n"
+                "Leave Approval\n\n"
+                "Submitting a leave request does not guarantee approval.\n\n"
+                "Managers consider:\n\n"
+                "Team workload\n"
+                "Project deadlines\n"
+                "Existing approved leave\n"
+                "Business continuity\n"
+                "The employee's available leave balance\n\n"
+                "Employees should wait for approval before making commitments "
+                "that depend on the leave being granted."
+            )
+        ],
+    },
 
     # {
     #     "input": "Can I take annual leave during a critical project deadline?",
