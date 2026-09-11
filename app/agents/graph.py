@@ -10,10 +10,8 @@ from app.prompt import MODEL_SYSTEM_PROMPT
 from app.config import (GEMINI_MODEL,MODEL_PROVIDER)
 from app.tools.tools import tools
 
-# from langchain.agents import create_agent
 load_dotenv()
 
-# CONFIG={'configurable':{'thread_id': "user-1"}}
 DB_URL=os.getenv('DB_URL')
 
 #model
@@ -26,7 +24,6 @@ tool_node =ToolNode(tools)
 class MessageState(TypedDict):
     messages:Annotated[list[AnyMessage],add_messages]
     retrieval_context:list[str]
-
 
 #create node
 def chat_node(state:MessageState)->MessageState:
@@ -53,13 +50,21 @@ builder = graph.compile(
     checkpointer=checkpointer
 )
 
-
 def run_agent(question: str,user_id:str):
     config = {
         "configurable": {
             "thread_id": user_id
         }
     }
+    
+    #get previous state
+    previous_state = builder.get_state(config)
+    previous_messages=previous_state.values.get("messages", [])
+    previous_message_count = len(previous_messages)
+
+    # print("Previous Messages",previous_messages)
+    # print("Length Previous Messages",previous_message_count)
+
 
     output = builder.invoke(
         {
@@ -69,18 +74,23 @@ def run_agent(question: str,user_id:str):
         },
         config=config
     )
+
     messages = output["messages"]
+    current_messages=messages[previous_message_count:]
+
+    # print("Current Messages",current_messages)
+    # print("Length Current Messages",len(current_messages))
+
     answer = messages[-1].content
     tool_outputs = [
         message.content
-        for message in messages
+        for message in current_messages
         if message.type == "tool"
     ]
 
     tools_called = []
-    # print(messages)
-    # print("="*20)
-    for message in messages:
+  
+    for message in current_messages:
         if hasattr(message, "tool_calls") and message.tool_calls:
             for tool_call in message.tool_calls:
                 tools_called.append({
@@ -88,17 +98,43 @@ def run_agent(question: str,user_id:str):
                     "args": tool_call.get("args", {}),
                 })
 
-
     return {
         "answer": answer,
         "retrieval_context": tool_outputs,
         "tools_called": tools_called
     }
 
+def stream_agent(question:str,user_id:str):
+    config = {
+        "configurable": {
+            "thread_id": user_id
+        }
+    }
+
+    for message, metadata in builder.stream(
+        {
+            "messages": [
+                HumanMessage(content=question)
+            ]
+        },
+        config=config,
+        stream_mode="messages",
+    ):
+        if message.text:
+            yield message.text
+
+
 if __name__=="__main__":
-    result = run_agent(
-        question="list all the events on august 30?",
-        user_id="test-agent-2",
-    )
-    print(result['tools_called'])
+    # result = run_agent(
+    #     question="hi?",
+    #     user_id="test-agent-4",
+    # )
+    # print(result['answer'])
+    # print("Retrieval Context",result['retrieval_context'])
+    # print("Tools Called",result['tools_called'])
     # print(result['answer'][0]['text'])
+    for chunk in stream_agent(
+        question="hi?",
+        user_id="test-agent-4",
+    ):
+        print(chunk,end="",flush=True)

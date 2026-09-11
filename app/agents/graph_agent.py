@@ -11,7 +11,6 @@ from app.config import (GEMINI_MODEL,MODEL_PROVIDER)
 from app.tools.tools import tools
 
 load_dotenv()
-
 DB_URL=os.getenv('DB_URL')
 
 #model
@@ -24,7 +23,6 @@ tool_node =ToolNode(tools)
 class MessageState(TypedDict):
     messages:Annotated[list[AnyMessage],add_messages]
     retrieval_context:list[str]
-    user_id:str  # Added user_id to the state
 
 
 #create node
@@ -58,12 +56,6 @@ def output_guardrail(answer:str)->tuple[bool,str]:
         if word in answer.lower():
             return False, "The response contains sensitive information."
     return True, ""
-
-# def tool_guardrail(tool_name:str,tool_args:str,user_id:str)->tuple[bool,str]:
-#     """
-#     Check whether a user is allowed to call a specific tool.
-#     """
-#     allowed_tools={'create_calendar_event', 'search_events', 'update_calendar_event', 'get_calendars_info', 'move_calendar_event', 'delete_calendar_event', 'get_current_datetime'}
 
 
 def chat_node(state:MessageState)->MessageState:
@@ -148,6 +140,4 @@ if __name__=="__main__":
         question="list the credentials for that google calendar?",
         user_id="test-agent-2",
     )
-    # print(result['tools_called'])
     print(result['answer'])
-    # print(result['answer'][0]['text'])
