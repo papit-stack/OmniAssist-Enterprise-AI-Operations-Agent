@@ -1,0 +1,49 @@
+IT AND SECURITY POLICY - NovaTech Solutions Private Limited
+
+Purpose
+This policy protects company data, systems, and employees from cyber threats. All employees must read and acknowledge this policy during onboarding and annually.
+
+Acceptable Use of Company Devices and Systems
+- Company-issued laptops, phones, and accounts must be used for business purposes. Minor personal use is acceptable but should not interfere with work.
+- Do not store personal or non-company confidential data on company devices beyond incidental amounts.
+- Company accounts (email, VPN, project tools) are for official use. Sharing passwords is strictly prohibited.
+
+Passwords and Authentication
+- All company accounts must use Multi-Factor Authentication (MFA). Set up MFA on day 1 for your email and SSO accounts.
+- Passwords must be at least 12 characters and include upper case, lower case, numbers, and special characters.
+- Passwords must be changed every 90 days. Never reuse the last 5 passwords.
+- In case of a suspected compromise, immediately report to security@novatech.example and change your password.
+
+Device Management
+- All devices must have the company antivirus (SentinelOne) installed and be kept updated (auto-updates enable).
+- Keep your device encrypted (BitLocker/FileVault enabled by default).
+- Do not install unauthorized software. Software requests go through the IT approval workflow.
+- Report a lost or stolen device to IT within 2 hours; the device is remotely wiped if needed.
+
+Data Classification and Handling
+- Data is classified as Public, Internal, Confidential, or Restricted.
+- Customer data is Confidential or Restricted. It must never leave approved systems, be emailed externally, or be copied to personal devices.
+- Personal/sensitive employee information is Restricted and accessible only to HR and authorized payroll team.
+- Use the official data-sharing tool (SharePoint) for sharing; do not use unauthorized file-sharing services for company data.
+- Clean desk policy: lock your screen when away (Windows key + L), do not leave confidential documents unattended.
+
+Internet and Email Security
+- Do not click suspicious links or open unexpected attachments. Report phishing to security@novatech.example.
+- Company email is monitored for security compliance.
+- Browsing of inappropriate or illegal content is prohibited and is a disciplinary offense.
+
+Work from Home Security
+- Connect to office networks only through the company VPN (Cisco Secure Client).
+- Ensure home WiFi uses WPA2/3 encryption and a strong password.
+- Do not leave laptops unattended in public places. Use laptop privacy screens when traveling.
+- Print confidential documents only in the office, not on home printers.
+
+Incident Response
+- Any security incident (malware, phishing, data breach, lost device) must be reported within 4 hours to security@novatech.example.
+- Attempts to bypass security controls, or knowingly exposing data, lead to disciplinary action including possible termination.
+
+IT Security FAQ
+- How do I set up MFA? Go to the identity portal, scan the QR code, and register your authenticator app.
+- What is the password length requirement? Minimum 12 characters.
+- Can I use my personal laptop for work? Only in exception cases with IT approval.
+- Whom to contact for IT issues? ithelpdesk@novatech.example or raise a ticket on the portal.

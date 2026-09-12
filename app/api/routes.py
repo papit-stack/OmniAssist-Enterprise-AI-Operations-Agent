@@ -1,6 +1,6 @@
 from fastapi import HTTPException,APIRouter
 from fastapi.responses import StreamingResponse
-from app.agents.graph import stream_agent
+from app.agents.new_agent import stream_agent
 
 from pydantic import BaseModel,Field
 router=APIRouter()

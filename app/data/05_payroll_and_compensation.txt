@@ -1,0 +1,34 @@
+PAYROLL AND COMPENSATION - NovaTech Solutions Private Limited
+
+Salary Cycle
+Salary is paid on the last working day of every month, i.e., the last working day of the calendar month, for the completed month. If the date falls on a weekend or a public holiday, salary is credited on the immediately preceding working day.
+
+Salary Structure
+Monthly salary is split into the following components:
+1. Basic Salary (approx. 50% of CTC) - fully taxable.
+2. House Rent Allowance (HRA) (approx. 30% of Basic).
+3. Special Allowance.
+4. Provident Fund deduction: 12% of Basic.
+5. Professional Tax: INR 200 per month for salaries above INR 15,000 per month in Bengaluru.
+6. Leave Encashment component where applicable.
+
+Payroll processes run through a third-party payroll vendor. The salary bank account details provided during onboarding are used. Employees should update any change in bank or address through the Employee Portal before the 10th of the month.
+
+Payslips and Tax
+- Payslip is generated on the Employee Portal on the last working day of each month. Employees can log in and download PDF payslips from the payroll section.
+- Form 16 for the previous financial year is available on the portal by 15th June every year.
+- Tax is deducted at source (TDS) as per income tax rules. Employees can submit investment declarations (e.g., 80C, HRA rent proof, medical insurance) in the portal during April, or November-December window for revision.
+- Tax refund/adjustment, if any, happens while processing February salary.
+
+Deductions
+Standard monthly deductions include: PF (12% of Basic), Professional Tax, and income tax as applicable. Voluntary deductions (meal cards, employee loan repayments, insurance premium) are made if opted.
+
+Overtime and Bonus
+- No overtime pay is provided; extra working hours are compensated with comp-off (see Leave Policy).
+- Annual performance bonus is paid with the March salary based on the employee rating (see Performance Review policy).
+- Diwali festival bonus of INR 5,000 is paid to all confirmed employees.
+
+Common Queries
+- If my salary is not credited, contact payroll support at payroll@novatech.example within 3 working days.
+- Salary advance: Employees with more than 1 year of service can take an advance of up to 1 month's net take-home, repayable in 3 monthly installments.
+- Change of bank account: update in portal before the 10th of the month.

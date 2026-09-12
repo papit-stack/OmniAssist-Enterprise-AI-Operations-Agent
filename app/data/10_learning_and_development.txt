@@ -1,0 +1,43 @@
+LEARNING AND DEVELOPMENT - NovaTech Solutions Private Limited
+
+Learning is a core benefit at NovaTech. Every employee gets time and budget to grow skills.
+
+Learning Budget
+- INR 25,000 per year for every employee on courses, books, certifications, and conferences.
+- The budget covers the full cost of work-related training. Unused budget does not carry forward.
+- Courses must be approved by the manager. Requests are made through Employee Portal > Learning > Course Request.
+
+Training Hours and Learning Days
+- Every employee is expected to complete at least 5 days (40 hours) of learning per year.
+- Learning days are treated as working days; no leave deduction for approved training.
+- Manager-approved study time during business hours of up to 4 hours per week is available.
+
+Mandatory Trainings
+Every employee must complete the following annual e-learnings in the LMS:
+1. Data & Cyber Security Awareness
+2. POSH (Prevention of Sexual Harassment) awareness
+3. Workplace Ethics and Code of Conduct
+4. Intellectual Property basics
+Completion is tracked and reflected in the annual review.
+
+Technical and Functional Training
+- Cloud certifications (AWS, Azure, GCP) - company sponsors 100% cost and gives 1 extra study day per exam.
+- Professional certifications (e.g., PMP, Agile/Scrum, CISSP) - 100% sponsorship and one-time bonus of INR 10,000 on completion.
+- Internal bootcamps on new technologies are run quarterly by the Engineering Academy.
+- Soft-skills workshops (communication, leadership, time management) are conducted every quarter via an external partner.
+
+Career Growth Framework
+- Career tracks: Individual Contributor (IC) and Manager tracks; technical roles have parallel growth (Engineer -> Senior -> Lead -> Architect -> Principal).
+- Career roadmap discussions happen during the mid-year and annual reviews.
+- Internal job postings are advertised first before external hiring; employees can apply after 18 months in their current role (with manager approval).
+
+Mentorship Program
+- Every employee under 2 years of experience is assigned a mentor from a senior level.
+- Mentor meetings are recommended once every 2 weeks at 30 minutes.
+- Contact the L&D team at lnd@novatech.example to request a mentor or become one.
+
+Learning FAQ
+- How much is my training budget? INR 25,000 per year.
+- Do I need manager approval for a course? Yes, courses need manager approval on the portal.
+- Is the certification exam fee reimbursed? Yes, 100% for approved work-related certifications.
+- Can I attend a conference abroad? Yes, with department head approval; travel covered as per Travel policy.
