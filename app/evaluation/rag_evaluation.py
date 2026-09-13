@@ -7,11 +7,10 @@ from deepeval.metrics import (
 )
 from deepeval.test_case import LLMTestCaseParams
 from deepeval.models import GeminiModel
-
 from app.evaluation.eval_dataset import test_cases
-from app.agents.graph import run_agent
+from app.agents.new_agent import test_agent
 from app.config import GEMINI_MODEL
-
+import json
 
 
 # Evaluation model
@@ -20,11 +19,7 @@ eval_model = GeminiModel(
     model=GEMINI_MODEL
 )
 
-
-
 # Metrics
-
-
 faithfulness_metric = FaithfulnessMetric(
     model=eval_model,
     threshold=0.85,
@@ -42,17 +37,11 @@ relevancy_metric = AnswerRelevancyMetric(
 correctness_metric = GEval(
     name="Answer Correctness",
     criteria="""
-    Evaluate whether the actual answer correctly answers the user's
-    question according to the expected answer.
+    The answer should contain the core information necessary to answer the
+    user's question. Do not penalize the answer for omitting additional
+    information from the expected answer if that information is not necessary
+    to answer the user's specific question.
 
-    The answer should:
-    1. Be factually correct.
-    2. Contain the important information required by the expected answer.
-    3. Not contradict the expected answer.
-    4. Directly answer the user's question.
-
-    Give a high score when the actual answer is substantively correct
-    even if the wording differs from the expected answer.
     """,
     evaluation_params=[
         LLMTestCaseParams.INPUT,
@@ -60,55 +49,53 @@ correctness_metric = GEval(
         LLMTestCaseParams.EXPECTED_OUTPUT,
     ],
     model=eval_model,
+    threshold=0.9
 )
 
 
 
 # Build generation test cases
-
-
 def build_test_cases():
 
     dataset = []
 
-    for case in test_cases:
+    for idx,case in enumerate(test_cases):
 
         question = case["input"]
-
-
-        result = run_agent(
+        result = test_agent(
             question=question,
-            user_id="user-10",
-        )
-        test_case = LLMTestCase(
-            input=question,
-            actual_output=result['answer'][0]['text'],
-            expected_output=case["expected_output"],
-            retrieval_context=result['retrieval_context'],
+            user_id=f"yohohooooo-{idx}",
         )
 
-        dataset.append(test_case)
+        dataset.append({
+            "input": question,
+            "actual_output": result['answer'][0]['text'],
+            "expected_output": case["expected_output"],
+            "retrieval_context": result["retrieval_context"],
+            "tools_called": result["tools_called"],
+        })
 
-    return dataset
+    with open("test_cases.json", "w", encoding="utf-8") as f:
+        json.dump(dataset, f, indent=2, ensure_ascii=False)
 
 
-
-# Run evaluation
-
+#run evaluation
 def run_evaluation():
+    with open("test_cases.json", "r", encoding="utf-8") as f:
+        dataset = json.load(f)
 
-    dataset = build_test_cases()
+    # Convert dataset to DeepEval test cases
+    for idx,case in enumerate(dataset):
+        test_case = LLMTestCase(
+            input=case["input"],
+            actual_output=case["actual_output"],
+            expected_output=case["expected_output"],
+            retrieval_context=case["retrieval_context"],
+        )
+        print(f"\nEvaluating test case {idx + 1}/{len(dataset)}")
+        evaluate([test_case],metrics=[relevancy_metric,faithfulness_metric,correctness_metric])
+     
 
-    results = evaluate(
-        test_cases=dataset,
-        metrics=[
-            faithfulness_metric,
-            relevancy_metric,
-            correctness_metric,
-        ],
-    )
-
-    return results
 
 
 

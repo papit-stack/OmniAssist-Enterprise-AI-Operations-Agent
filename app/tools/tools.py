@@ -1,6 +1,6 @@
 from langchain_core.tools import tool
 import datetime
-from langchain_tavily import TavilySearch
+# from langchain_tavily import TavilySearch
 from app.tools.calendar_tools import calendar_tools
 from app.rag.rag_tool import search_company_policies
 from dotenv import load_dotenv
@@ -23,6 +23,6 @@ def calculator(expression: str) -> str:
 #     return datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 
-web_search = TavilySearch(max_results=5)
+# web_search = TavilySearch(max_results=5)
 
-tools=[calculator,web_search,*calendar_tools,search_company_policies]
+tools=[calculator,*calendar_tools,search_company_policies]

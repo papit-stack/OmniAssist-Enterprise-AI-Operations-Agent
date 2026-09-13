@@ -1,363 +1,218 @@
 test_cases = [
 
     # =========================
-    # Annual Leave
+    # Company Overview
     # =========================
 
-    # {
-    #     "input": "What is the annual leave policy?",
-    #     "expected_output": (
-    #         "Annual leave provides paid time off for personal or vacation purposes."
-    #     ),
-    #     "expected_retrieval_context": [
-    #         (
-    #             "Annual Leave: Paid time off for personal or vacation purposes.\n\n"
-    #             "Annual Leave\n\n"
-    #             "Employees should submit annual leave requests at least 3 working days "
-    #             "before the intended start date.\n\n"
-    #             "Annual leave is subject to manager approval and business requirements.\n\n"
-    #             "Employees should avoid scheduling leave during critical project deadlines "
-    #             "unless prior approval has been obtained."
-    #         )
-    #     ],
-    # },
-
     {
-        "input": "How many days in advance should I request annual leave?",
+        "input": "When was NovaTech Solutions founded and how many employees does it have?",
         "expected_output": (
-            "Annual leave requests must be submitted at least 3 working days "
-            "before the intended start date."
+            "NovaTech Solutions Private Limited was founded in 2014 by two co-founders "
+            "and has approximately 1,200 employees as of 2025. It is a technology "
+            "company that designs and builds software products and provides IT services "
+            "to clients across banking, healthcare, and retail industries."
         ),
         "expected_retrieval_context": [
             (
-                "Annual Leave\n\n"
-                "Employees should submit annual leave requests at least 3 working days "
-                "before the intended start date.\n\n"
-                "Annual leave is subject to manager approval and business requirements.\n\n"
-                "Employees should avoid scheduling leave during critical project deadlines "
-                "unless prior approval has been obtained."
+                "NovaTech Solutions Private Limited (NovaTech) is a technology company founded in 2014. "
+                "We design and build software products and provide IT services. Today the company has "
+                "more than 1,200 employees and serves clients across banking, healthcare, and retail industries.\n\n"
+                "Employees: approximately 1,200 as of 2025.\n"
+                "Revenue: annual revenue of approximately USD 45 million.\n"
+                "Founded: 2014 by two co-founders. Profitable since 2018.\n"
+                "Employer of Choice: listed among the \"Best IT Workplaces\" in India for 2024."
             )
         ],
     },
 
+    # =========================
+    # Leave Policy
+    # =========================
+
     {
-        "input": "Who approves annual leave requests?",
+        "input": "How many days of earned leave and casual leave do I get per year?",
         "expected_output": (
-            "Annual leave approval depends on business requirements, team workload, "
-            "project deadlines, existing approved leaves, and available leave balance."
+            "You get 18 days of Earned Leave (EL) per year, which is eligible after completing "
+            "6 months of service, and 8 days of Casual Leave (CL) per year. Casual leave cannot "
+            "be carried forward; only Earned Leave of up to 30 days can be carried forward to the next year."
         ),
         "expected_retrieval_context": [
             (
-                "Annual leave is subject to manager approval and business requirements.\n\n"
-                "Leave Approval\n\n"
-                "Submitting a leave request does not guarantee approval.\n\n"
-                "Managers consider:\n\n"
-                "Team workload\n"
-                "Project deadlines\n"
-                "Existing approved leave\n"
-                "Business continuity\n"
-                "The employee's available leave balance\n\n"
-                "Employees should wait for approval before making commitments "
-                "that depend on the leave being granted."
+                "1. Earned Leave (EL): 18 days per year. Eligible after completing 6 months of service. "
+                "Can be encashed up to a maximum of 5 days per year. Unused EL of up to 30 days can be "
+                "carried forward to the next year.\n"
+                "2. Casual Leave (CL): 8 days per year. Meant for short, unplanned absences. "
+                "Cannot be carried forward. At least 1 day advance notice is expected unless it is an emergency."
             )
         ],
     },
 
-    # {
-    #     "input": "Can I take annual leave during a critical project deadline?",
-    #     "expected_output": (
-    #         "Employees should avoid scheduling annual leave during critical project "
-    #         "deadlines unless they have prior approval."
-    #     ),
-    #     "expected_retrieval_context": [
-    #         (
-    #             "Employees should avoid scheduling leave during critical project deadlines "
-    #             "unless prior approval has been obtained."
-    #         )
-    #     ],
-    # },
-
-    # {
-    #     "input": "Does submitting an annual leave request guarantee approval?",
-    #     "expected_output": (
-    #         "No. Submitting an annual leave request does not guarantee approval."
-    #     ),
-    #     "expected_retrieval_context": [
-    #         (
-    #             "Leave Approval\n\n"
-    #             "Submitting a leave request does not guarantee approval.\n\n"
-    #             "Managers consider:\n\n"
-    #             "Team workload\n"
-    #             "Project deadlines\n"
-    #             "Existing approved leave\n"
-    #             "Business continuity\n"
-    #             "The employee's available leave balance"
-    #         )
-    #     ],
-    # },
-
     # =========================
-    # Sick Leave
+    # Employee Benefits
     # =========================
 
-    # {
-    #     "input": "What is the sick leave policy?",
-    #     "expected_output": (
-    #         "Employees may take sick leave when they are unable to work due to illness "
-    #         "according to the company's sick leave policy."
-    #     ),
-    #     "expected_retrieval_context": [
-    #         (
-    #             "Sick Leave: Leave taken when an employee is ill or requires medical attention.\n\n"
-    #             "Sick Leave\n\n"
-    #             "Employees should notify their manager as soon as reasonably possible "
-    #             "when they are unable to work due to illness.\n\n"
-    #             "For extended periods of illness, the company may request appropriate "
-    #             "medical documentation in accordance with applicable law and company procedures."
-    #         )
-    #     ],
-    # },
-
-    # {
-    #     "input": "How do I request sick leave?",
-    #     "expected_output": (
-    #         "Employees should notify their manager and follow the company's leave "
-    #         "request procedure when taking sick leave."
-    #     ),
-    #     "expected_retrieval_context": [
-    #         (
-    #             "Sick Leave\n\n"
-    #             "Employees should notify their manager as soon as reasonably possible "
-    #             "when they are unable to work due to illness.\n\n"
-    #             "For extended periods of illness, the company may request appropriate "
-    #             "medical documentation in accordance with applicable law and company procedures."
-    #         )
-    #     ],
-    # },
-
-    # {
-    #     "input": "Do I need approval for sick leave?",
-    #     "expected_output": (
-    #         "Employees should follow the company's notification and approval process "
-    #         "for sick leave."
-    #     ),
-    #     "expected_retrieval_context": [
-    #         (
-    #             "Sick Leave\n\n"
-    #             "Employees should notify their manager as soon as reasonably possible "
-    #             "when they are unable to work due to illness.\n\n"
-    #             "For extended periods of illness, the company may request appropriate "
-    #             "medical documentation in accordance with applicable law and company procedures."
-    #         )
-    #     ],
-    # },
+    {
+        "input": "What is the medical insurance cover at NovaTech?",
+        "expected_output": (
+            "NovaTech provides group medical insurance of INR 8,00,000 per employee per year for "
+            "self, spouse, and up to 2 dependent children through a top insurance partner. "
+            "Employees can voluntarily cover parents by paying a small premium."
+        ),
+        "expected_retrieval_context": [
+            (
+                "1. Group Medical Insurance: Cover of INR 8,00,000 per employee per year for self, "
+                "spouse, and up to 2 dependent children. Provided through a top insurance partner. "
+                "Employees can also voluntarily cover parents by paying a small premium."
+            )
+        ],
+    },
 
     # =========================
-    # Remote Work
+    # HR Policies and Onboarding
     # =========================
 
-    # {
-    #     "input": "What is the remote work policy?",
-    #     "expected_output": (
-    #         "Remote work is permitted subject to company requirements, business needs, "
-    #         "and manager approval."
-    #     ),
-    #     "expected_retrieval_context": [
-    #         (
-    #             "REMOTE WORK POLICY\n\n"
-    #             "Purpose\n\n"
-    #             "This policy establishes guidelines for employees who work remotely "
-    #             "or use a hybrid work arrangement.\n\n"
-    #             "Eligibility\n\n"
-    #             "Remote work eligibility depends on:\n\n"
-    #             "Job responsibilities\n"
-    #             "Team requirements\n"
-    #             "Business needs\n"
-    #             "Manager approval\n"
-    #             "Employee performance and reliability\n\n"
-    #             "Not all roles are suitable for remote work."
-    #         )
-    #     ],
-    # },
-
-    # {
-    #     "input": "Who can work remotely?",
-    #     "expected_output": (
-    #         "Employees may work remotely when their role and business requirements "
-    #         "allow it and the appropriate approval has been obtained."
-    #     ),
-    #     "expected_retrieval_context": [
-    #         (
-    #             "Eligibility\n\n"
-    #             "Remote work eligibility depends on:\n\n"
-    #             "Job responsibilities\n"
-    #             "Team requirements\n"
-    #             "Business needs\n"
-    #             "Manager approval\n"
-    #             "Employee performance and reliability\n\n"
-    #             "Not all roles are suitable for remote work."
-    #         )
-    #     ],
-    # },
-
-    # {
-    #     "input": "Does remote work require manager approval?",
-    #     "expected_output": (
-    #         "Yes, remote work may require manager approval depending on company policy "
-    #         "and business requirements."
-    #     ),
-    #     "expected_retrieval_context": [
-    #         (
-    #             "Eligibility\n\n"
-    #             "Remote work eligibility depends on:\n\n"
-    #             "Job responsibilities\n"
-    #             "Team requirements\n"
-    #             "Business needs\n"
-    #             "Manager approval\n"
-    #             "Employee performance and reliability\n\n"
-    #             "Not all roles are suitable for remote work."
-    #         )
-    #     ],
-    # },
+    {
+        "input": "How long is the probation period and the notice period for a regular employee?",
+        "expected_output": (
+            "Every new employee has a probation period of 6 months, extendable by a maximum of "
+            "3 months. The notice period is 60 days for regular employees (or buy-out at management "
+            "discretion) and 15 days during probation."
+        ),
+        "expected_retrieval_context": [
+            (
+                "Every new employee has a probation period of 6 months, extendable by a maximum of "
+                "3 months. During probation, regular feedback is given. Confirmation is subject to "
+                "satisfactory performance. No leave encashment is applicable during probation.\n\n"
+                "- Notice period for regular employees: 60 days, or buy-out at management discretion.\n"
+                "- Notice period during probation: 15 days."
+            )
+        ],
+    },
 
     # =========================
-    # Expense Policy
+    # Payroll and Compensation
     # =========================
 
-    # {
-    #     "input": "What expenses can employees claim?",
-    #     "expected_output": (
-    #         "Employees can claim approved business expenses incurred during official "
-    #         "company activities."
-    #     ),
-    #     "expected_retrieval_context": [
-    #         (
-    #             "Eligible Expenses\n\n"
-    #             "Reasonable and necessary expenses incurred for legitimate business "
-    #             "purposes may be reimbursable.\n\n"
-    #             "Examples include:\n\n"
-    #             "Business travel\n"
-    #             "Transportation\n"
-    #             "Accommodation\n"
-    #             "Business meals\n"
-    #             "Client or business meetings\n"
-    #             "Approved conferences and events\n"
-    #             "Other expenses specifically authorized by the company"
-    #         )
-    #     ],
-    # },
-
-    # {
-    #     "input": "How do I submit an expense claim?",
-    #     "expected_output": (
-    #         "Employees should submit expenses through the company's expense "
-    #         "reimbursement process with the required documentation."
-    #     ),
-    #     "expected_retrieval_context": [
-    #         (
-    #             "Expense Submission\n\n"
-    #             "Employees should submit expense claims within 30 days of the expense "
-    #             "unless their department has a different deadline.\n\n"
-    #             "Each expense claim should include:\n\n"
-    #             "Expense date\n"
-    #             "Amount\n"
-    #             "Currency\n"
-    #             "Business purpose\n"
-    #             "Appropriate category\n"
-    #             "Supporting receipt or documentation"
-    #         )
-    #     ],
-    # },
-
-    # {
-    #     "input": "What documents are required for expense reimbursement?",
-    #     "expected_output": (
-    #         "Employees should provide the required supporting documentation, such as "
-    #         "receipts, when submitting an expense claim."
-    #     ),
-    #     "expected_retrieval_context": [
-    #         (
-    #             "Receipts\n\n"
-    #             "Employees must retain receipts or other required supporting "
-    #             "documentation for reimbursable expenses.\n\n"
-    #             "Receipts should clearly show:\n\n"
-    #             "Date\n"
-    #             "Vendor\n"
-    #             "Amount\n"
-    #             "Description of the expense\n\n"
-    #             "If a receipt is unavailable, the employee should follow the company's "
-    #             "approved missing-receipt procedure."
-    #         )
-    #     ],
-    # },
+    {
+        "input": "When is salary paid each month?",
+        "expected_output": (
+            "Salary is paid on the last working day of every month for the completed month. "
+            "If that date falls on a weekend or a public holiday, salary is credited on the "
+            "immediately preceding working day."
+        ),
+        "expected_retrieval_context": [
+            (
+                "Salary is paid on the last working day of every month, i.e., the last working day "
+                "of the calendar month, for the completed month. If the date falls on a weekend or a "
+                "public holiday, salary is credited on the immediately preceding working day."
+            )
+        ],
+    },
 
     # =========================
-    # Conversational Queries
+    # Office and Facilities
     # =========================
 
-    # {
-    #     "input": "I want to take annual leave. How many days before should I ask?",
-    #     "expected_output": (
-    #         "Annual leave requests must be submitted at least 3 working days "
-    #         "before the intended start date."
-    #     ),
-    #     "expected_retrieval_context": [
-    #         (
-    #             "Annual Leave\n\n"
-    #             "Employees should submit annual leave requests at least 3 working days "
-    #             "before the intended start date.\n\n"
-    #             "Annual leave is subject to manager approval and business requirements.\n\n"
-    #             "Employees should avoid scheduling leave during critical project deadlines "
-    #             "unless prior approval has been obtained."
-    #         )
-    #     ],
-    # },
+    {
+        "input": "What are the office timings and how do I book a meeting room?",
+        "expected_output": (
+            "Standard office hours are 9:00 AM to 6:00 PM, Monday to Friday, with flexi timing "
+            "between 8:00 AM and 8:00 PM available with manager approval. Meeting rooms can be "
+            "booked through the calendar system up to 2 weeks in advance."
+        ),
+        "expected_retrieval_context": [
+            (
+                "- Standard office hours: 9:00 AM to 6:00 PM, Monday to Friday.\n"
+                "- Offices remain open from 8:00 AM to 8:00 PM for flexi timing with manager approval.\n\n"
+                "3. Meeting Rooms: Book through the calendar system up to 2 weeks in advance; "
+                "video-conferencing enabled."
+            )
+        ],
+    },
 
-    # {
-    #     "input": "What about remote work?",
-    #     "expected_output": (
-    #         "Remote work is permitted subject to company requirements, business needs, "
-    #         "and manager approval."
-    #     ),
-    #     "expected_retrieval_context": [
-    #         (
-    #             "REMOTE WORK POLICY\n\n"
-    #             "Purpose\n\n"
-    #             "This policy establishes guidelines for employees who work remotely "
-    #             "or use a hybrid work arrangement.\n\n"
-    #             "Eligibility\n\n"
-    #             "Remote work eligibility depends on:\n\n"
-    #             "Job responsibilities\n"
-    #             "Team requirements\n"
-    #             "Business needs\n"
-    #             "Manager approval\n"
-    #             "Employee performance and reliability\n\n"
-    #             "Not all roles are suitable for remote work."
-    #         )
-    #     ],
-    # },
+    # =========================
+    # IT and Security Policy
+    # =========================
 
-    # {
-    #     "input": "Can I claim this expense?",
-    #     "expected_output": (
-    #         "An expense may be claimed if it is an approved business expense "
-    #         "incurred during official company activities and meets the reimbursement "
-    #         "requirements."
-    #     ),
-    #     "expected_retrieval_context": [
-    #         (
-    #             "Eligible Expenses\n\n"
-    #             "Reasonable and necessary expenses incurred for legitimate business "
-    #             "purposes may be reimbursable.\n\n"
-    #             "Examples include:\n\n"
-    #             "Business travel\n"
-    #             "Transportation\n"
-    #             "Accommodation\n"
-    #             "Business meals\n"
-    #             "Client or business meetings\n"
-    #             "Approved conferences and events\n"
-    #             "Other expenses specifically authorized by the company"
-    #         )
-    #     ],
-    # },
+    {
+        "input": "What is the password requirement for company accounts?",
+        "expected_output": (
+            "Passwords must be at least 12 characters and include upper case, lower case, numbers, "
+            "and special characters. Passwords must be changed every 90 days and you must never "
+            "reuse the last 5 passwords. All company accounts must also use Multi-Factor Authentication (MFA)."
+        ),
+        "expected_retrieval_context": [
+            (
+                "- All company accounts must use Multi-Factor Authentication (MFA). Set up MFA on day 1 "
+                "for your email and SSO accounts.\n"
+                "- Passwords must be at least 12 characters and include upper case, lower case, numbers, "
+                "and special characters.\n"
+                "- Passwords must be changed every 90 days. Never reuse the last 5 passwords."
+            )
+        ],
+    },
+
+    # =========================
+    # Travel and Expense Policy
+    # =========================
+
+    {
+        "input": "How much is the daily allowance for domestic travel?",
+        "expected_output": (
+            "For domestic travel, the per diem is INR 900 per day toward food and incidental expenses. "
+            "No receipt is needed for per diem up to 6 hours (half-day); full-day rules apply as per the portal. "
+            "Claims must be pre-approved where applicable and submitted within 30 days."
+        ),
+        "expected_retrieval_context": [
+            (
+                "- Domestic travel: INR 900 per day toward food and incidental expenses. No receipt needed "
+                "for per diem up to 6 hours (half-day) and full-day rules apply as per portal.\n"
+                "- International travel: The per diem differs by country and is published on the travel page."
+            )
+        ],
+    },
+
+    # =========================
+    # Performance and Promotions
+    # =========================
+
+    {
+        "input": "What is the minimum tenure required for a promotion?",
+        "expected_output": (
+            "To be eligible for a promotion you need a minimum of 18 months in your current role at "
+            "the time of the review cycle, or 12 months for outstanding performers. Promotion is based "
+            "on ratings (last 2 cycles average 4 or above), skills, and business need, and is approved "
+            "by a promotion committee."
+        ),
+        "expected_retrieval_context": [
+            (
+                "- Eligibility: minimum 18 months in current role at the time of review cycle "
+                "(12 months for outstanding performers).\n"
+                "- Promotion is based on ratings (last 2 cycles average 4 or above), skills, and business need. "
+                "A promotion committee approves all promotions."
+            )
+        ],
+    },
+
+    # =========================
+    # Learning and Development
+    # =========================
+
+    {
+        "input": "How much is the yearly learning budget for an employee?",
+        "expected_output": (
+            "Every employee gets a learning budget of INR 25,000 per year for courses, books, "
+            "certifications, and conferences. The budget covers the full cost of work-related training "
+            "and unused budget does not carry forward. Courses must be approved by the manager "
+            "through Employee Portal > Learning > Course Request."
+        ),
+        "expected_retrieval_context": [
+            (
+                "- INR 25,000 per year for every employee on courses, books, certifications, and conferences.\n"
+                "- The budget covers the full cost of work-related training. Unused budget does not carry forward.\n"
+                "- Courses must be approved by the manager. Requests are made through Employee Portal > "
+                "Learning > Course Request."
+            )
+        ],
+    },
 ]

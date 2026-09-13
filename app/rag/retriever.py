@@ -17,7 +17,7 @@ bm25_retriever=BM25Retriever.from_documents(chunks)
 bm25_retriever.k=10
 
 #hybrid retriever
-hybrid_retriever=EnsembleRetriever(retrievers=[vector_retriever,bm25_retriever],weights=[0.3,0.7])
+hybrid_retriever=EnsembleRetriever(retrievers=[vector_retriever,bm25_retriever],weights=[0.7, 0.3])
 reranker=CohereRerank(model=COHERE_RERANK_MODEL,top_n=5)
 retriever=ContextualCompressionRetriever(base_retriever=hybrid_retriever,base_compressor=reranker)
 

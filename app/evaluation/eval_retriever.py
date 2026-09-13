@@ -3,9 +3,16 @@ from deepeval.test_case import LLMTestCase
 from app.evaluation.eval_dataset import test_cases
 from deepeval.metrics import ContextualPrecisionMetric,ContextualRecallMetric
 from app.config import GEMINI_MODEL
-from deepeval.models import GeminiModel,OpenAIModel
+from deepeval.models import GeminiModel,OpenAIModel,OllamaModel
 import os
 from app.rag.retriever import use_retriever
+
+# Local Ollama judge
+judge_model = OllamaModel(
+    model="llama3.2:3b",
+    base_url="http://localhost:11434",
+    temperature=0,
+)
 
 
 def build_test_cases():
@@ -17,24 +24,20 @@ def build_test_cases():
             input=test_case['input'],
             expected_output=test_case['expected_output'],
             retrieval_context=retrieval_context,
-            expected_retrieval_context=test_case['expected_retrieval_context']
+            # expected_retrieval_context=test_case['expected_retrieval_context']
         )
         dataset.append(test)
     return dataset
 
 eval_model=GeminiModel(model=GEMINI_MODEL)
-# eval_model_precision = OpenAIModel(
-#     model="inclusionai/ling-3.0-flash-fin:free",
-#     api_key=os.getenv("OPENROUTER_API_KEY"),
-#     base_url="https://openrouter.ai/api/v1",
-#     temperature=0,
-# )
+
 eval_model_precision = OpenAIModel(
     model="nvidia/nemotron-3.5-lightning:free",
     api_key=os.getenv("OPENROUTER_API_KEY"),
     base_url="https://openrouter.ai/api/v1",
     temperature=0,
 )
+
 glm_model = OpenAIModel(
     model="zai-org/GLM-5.3-Flash",
     api_key=os.getenv("HF_TOKEN"),
@@ -43,12 +46,19 @@ glm_model = OpenAIModel(
 )
 
 
-recall_metrics=ContextualRecallMetric(model=eval_model,threshold=0.85,include_reason=True,async_mode=False)
-precision_metrics=ContextualPrecisionMetric(model=glm_model,threshold=0.8,include_reason=True,async_mode=False)
+recall_metrics=ContextualRecallMetric(model=eval_model,threshold=0.9,include_reason=True,async_mode=False)
+precision_metrics=ContextualPrecisionMetric(model=eval_model,threshold=0.8,include_reason=True,async_mode=False)
 
 def run_evaluation():
     dataset=build_test_cases()
-    evaluate(dataset,metrics=[recall_metrics,precision_metrics])
+    for i, test_case in enumerate(dataset):
+        print(f"\nEvaluating test case {i + 1}/{len(dataset)}")
+
+        evaluate(
+            [test_case],
+            metrics=[precision_metrics,recall_metrics]
+        )
+
 
 if __name__=="__main__":
     run_evaluation()

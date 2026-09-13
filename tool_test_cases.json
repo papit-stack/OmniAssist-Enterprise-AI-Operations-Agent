@@ -1,0 +1,418 @@
+[
+  {
+    "input": "Calculate the square root of 144.",
+    "expected_tool": [
+      "calculator"
+    ],
+    "expected_args": [
+      {
+        "expression": "144 ** 0.5"
+      }
+    ],
+    "actual_tool": [
+      {
+        "name": "calculator",
+        "args": {
+          "expression": "144 ** 0.5"
+        },
+        "id": "call_3917020"
+      }
+    ]
+  },
+  {
+    "input": "Create a calendar event for a client call on Friday at 2 PM.",
+    "expected_tool": [
+      "get_current_datetime",
+        "get_calendars_info",
+        "create_calendar_event"
+
+    ],
+    "expected_args": [
+      {
+        "summary": "Client call"
+      }
+    ],
+    "actual_tool": [
+      {
+        "name": "get_current_datetime",
+        "args": {},
+        "id": "call_4942744"
+      },
+      {
+        "name": "get_calendars_info",
+        "args": {},
+        "id": "call_4099504"
+      },
+      {
+        "name": "create_calendar_event",
+        "args": {
+          "end_datetime": "2026-09-18 15:00:00",
+          "summary": "Client call",
+          "calendar_id": "linconghimire@gmail.com",
+          "start_datetime": "2026-09-18 14:00:00",
+          "timezone": "Asia/Kathmandu"
+        },
+        "id": "call_2658470"
+      }
+    ]
+  },
+  {
+    "input": "What meetings do I have scheduled for this week?",
+    "expected_tool": [
+      "get_calendars_info",
+      "get_current_datetime",
+      "search_events"
+    ],
+    "expected_args": [
+      {}
+    ],
+    "actual_tool": [
+      {
+        "name": "get_calendars_info",
+        "args": {},
+        "id": "call_3447320"
+      },
+      {
+        "name": "get_current_datetime",
+        "args": {
+          "calendar_id": "linconghimire@gmail.com"
+        },
+        "id": "call_3951160"
+      },
+      {
+        "name": "search_events",
+        "args": {
+          "single_events": true,
+          "calendars_info": "[{\"id\": \"en.np#holiday@group.v.calendar.google.com\", \"summary\": \"Holidays in Nepal\", \"timeZone\": \"Asia/Kathmandu\"}, {\"id\": \"linconghimire@gmail.com\", \"summary\": \"linconghimire@gmail.com\", \"timeZone\": \"Asia/Kathmandu\"}]",
+          "min_datetime": "2026-09-13 00:00:00",
+          "max_datetime": "2026-09-20 23:59:59"
+        },
+        "id": "call_960480"
+      }
+    ]
+  },
+  {
+    "input": "Change the time of my client call on Friday to 3 PM.",
+    "expected_tool": [
+      "update_calendar_event"
+    ],
+    "expected_args": [
+      {}
+    ],
+    "actual_tool": [
+      {
+        "name": "get_current_datetime",
+        "args": {},
+        "id": "call_2631174"
+      },
+      {
+        "name": "get_calendars_info",
+        "args": {},
+        "id": "call_3953648"
+      },
+      {
+        "name": "search_events",
+        "args": {
+          "min_datetime": "2026-09-13 00:00:00",
+          "max_datetime": "2026-09-18 23:59:59",
+          "calendars_info": "[{\"id\": \"en.np#holiday@group.v.calendar.google.com\", \"summary\": \"Holidays in Nepal\", \"timeZone\": \"Asia/Kathmandu\"}, {\"id\": \"linconghimire@gmail.com\", \"summary\": \"linconghimire@gmail.com\", \"timeZone\": \"Asia/Kathmandu\"}]",
+          "query": "client call"
+        },
+        "id": "call_3532956"
+      },
+      {
+        "name": "update_calendar_event",
+        "args": {
+          "end_datetime": "2026-09-18 16:00:00",
+          "summary": "Client call",
+          "calendar_id": "linconghimire@gmail.com",
+          "event_id": "k2g5fo9bgbe3d2h8nreqpsdsn4",
+          "timezone": "Asia/Kathmandu",
+          "start_datetime": "2026-09-18 15:00:00"
+        },
+        "id": "call_2659823"
+      }
+    ]
+  },
+  {
+    "input": "What is 245 * 18?",
+    "expected_tool": [
+      "calculator"
+    ],
+    "expected_args": [
+      {
+        "expression": "245 * 18"
+      }
+    ],
+    "actual_tool": [
+      {
+        "name": "calculator",
+        "args": {
+          "expression": "245 * 18"
+        },
+        "id": "call_3125601"
+      }
+    ]
+  },
+  {
+    "input": "When was NovaTech Solutions founded?",
+    "expected_tool": [
+      "search_company_policies"
+    ],
+    "expected_args": [
+      {
+        "query": "NovaTech founding year"
+      }
+    ],
+    "actual_tool": [
+      {
+        "name": "search_company_policies",
+        "args": {
+          "query": "founding founded history NovaTech Solutions"
+        },
+        "id": "call_1797549"
+      }
+    ]
+  },
+  {
+    "input": "What is the annual leave policy?",
+    "expected_tool": [
+      "search_company_policies"
+    ],
+    "expected_args": [
+      {
+        "query": "annual leave policy"
+      }
+    ],
+    "actual_tool": [
+      {
+        "name": "search_company_policies",
+        "args": {
+          "query": "annual leave policy"
+        },
+        "id": "call_3482380"
+      }
+    ]
+  },
+  {
+    "input": "What is the notice period for a regular employee?",
+    "expected_tool": [
+      "search_company_policies"
+    ],
+    "expected_args": [
+      {
+        "query": "notice period resignation"
+      }
+    ],
+    "actual_tool": [
+      {
+        "name": "search_company_policies",
+        "args": {
+          "query": "notice period regular employee"
+        },
+        "id": "call_623586"
+      }
+    ]
+  },
+  {
+    "input": "How do I change my bank account for salary?",
+    "expected_tool": [
+      "search_company_policies"
+    ],
+    "expected_args": [
+      {
+        "query": "change bank account salary"
+      }
+    ],
+    "actual_tool": [
+      {
+        "name": "search_company_policies",
+        "args": {
+          "query": "change bank account salary payroll direct deposit"
+        },
+        "id": "call_2495815"
+      }
+    ]
+  },
+  {
+    "input": "Who do I contact for IT issues?",
+    "expected_tool": [
+      "search_company_policies"
+    ],
+    "expected_args": [
+      {
+        "query": "IT helpdesk contact"
+      }
+    ],
+    "actual_tool": [
+      {
+        "name": "search_company_policies",
+        "args": {
+          "query": "IT issues contact support helpdesk"
+        },
+        "id": "call_3979877"
+      }
+    ]
+  },
+  {
+    "input": "How do I connect to the office network from home?",
+    "expected_tool": [
+      "search_company_policies"
+    ],
+    "expected_args": [
+      {
+        "query": "VPN work from home security"
+      }
+    ],
+    "actual_tool": [
+      {
+        "name": "search_company_policies",
+        "args": {
+          "query": "office network remote work vpn connect from home"
+        },
+        "id": "call_3962460"
+      }
+    ]
+  },
+  {
+    "input": "How do I appeal if I disagree with my rating?",
+    "expected_tool": [
+      "search_company_policies"
+    ],
+    "expected_args": [
+      {
+        "query": "rating appeal process"
+      }
+    ],
+    "actual_tool": [
+      {
+        "name": "search_company_policies",
+        "args": {
+          "query": "appeal rating performance review"
+        },
+        "id": "call_4919101"
+      }
+    ]
+  },
+  {
+    "input": "How do I get a mentor?",
+    "expected_tool": [
+      "search_company_policies"
+    ],
+    "expected_args": [
+      {
+        "query": "mentorship program"
+      }
+    ],
+    "actual_tool": [
+      {
+        "name": "search_company_policies",
+        "args": {
+          "query": "mentor mentorship"
+        },
+        "id": "call_2976878"
+      }
+    ]
+  },
+  {
+    "input": "Hello, how are you?",
+    "expected_tool": [
+      null
+    ],
+    "expected_args": [
+      {}
+    ],
+    "actual_tool": []
+  },
+  {
+    "input": "Tell me a joke.",
+    "expected_tool": [
+      null
+    ],
+    "expected_args": [
+      {}
+    ],
+    "actual_tool": []
+  },
+  {
+    "input": "What's 245 * 18 and what is our leave policy?",
+    "expected_tool": [
+      "calculator",
+        "search_company_policies"
+      
+    ],
+    "expected_args": [
+      {
+        "expression": "245 * 18"
+      },
+      {
+        "query": "leave policy"
+      }
+    ],
+    "actual_tool": [
+      {
+        "name": "calculator",
+        "args": {
+          "expression": "245 * 18"
+        },
+        "id": "call_3679327"
+      },
+      {
+        "name": "search_company_policies",
+        "args": {
+          "query": "leave policy"
+        },
+        "id": "call_3679328"
+      }
+    ]
+  },
+  {
+    "input": "Schedule a meeting with Alice tomorrow at 10 AM and check my calendar for that day.",
+    "expected_tool": [
+      "create_calendar_event",
+      "search_events"
+    ],
+    "expected_args": [
+      {
+        "summary": "Meeting with Alice",
+        "start_datetime": "Tomorrow at 10 AM"
+      },
+      [
+        {}
+      ]
+    ],
+    "actual_tool": [
+      {
+        "name": "get_current_datetime",
+        "args": {},
+        "id": "call_2465291"
+      },
+      {
+        "name": "get_calendars_info",
+        "args": {},
+        "id": "call_4207802"
+      },
+      {
+        "name": "search_events",
+        "args": {
+          "calendars_info": "[{\"id\": \"en.np#holiday@group.v.calendar.google.com\", \"summary\": \"Holidays in Nepal\", \"timeZone\": \"Asia/Kathmandu\"}, {\"id\": \"linconghimire@gmail.com\", \"summary\": \"linconghimire@gmail.com\", \"timeZone\": \"Asia/Kathmandu\"}]",
+          "min_datetime": "2026-09-14 00:00:00",
+          "single_events": true,
+          "max_datetime": "2026-09-14 23:59:59"
+        },
+        "id": "call_3474860"
+      },
+      {
+        "name": "create_calendar_event",
+        "args": {
+          "end_datetime": "2026-09-14 11:00:00",
+          "start_datetime": "2026-09-14 10:00:00",
+          "summary": "Meeting with Alice",
+          "timezone": "Asia/Kathmandu",
+          "calendar_id": "linconghimire@gmail.com"
+        },
+        "id": "call_4101602"
+      }
+    ]
+  }
+]

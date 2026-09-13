@@ -9,6 +9,7 @@ from langchain_core.messages import AnyMessage,HumanMessage,ToolMessage,AIMessag
 from app.prompt import MODEL_SYSTEM_PROMPT
 from app.config import (GEMINI_MODEL,MODEL_PROVIDER,GROQ_MODEL,GROQ_MODEL_PROVIDER)
 from langchain.agents.middleware import (PIIMiddleware,AgentMiddleware)
+import uuid
 
 from app.tools.tools import tools
 
@@ -22,15 +23,16 @@ class MessageState(TypedDict):
 
 
 #model
-gemini_model=init_chat_model(model=GEMINI_MODEL,model_provider=MODEL_PROVIDER)
-groq_model=init_chat_model(model=GROQ_MODEL,model_provider=GROQ_MODEL_PROVIDER)
+model=init_chat_model(model=GEMINI_MODEL,model_provider=MODEL_PROVIDER)
+# groq_model=init_chat_model(model=GROQ_MODEL,model_provider=GROQ_MODEL_PROVIDER)
 
-model=gemini_model.with_fallbacks([groq_model])    
+# model=gemini_model.with_fallbacks([groq_model])    
 
 #checkpointer
 checkpointer_cm = PostgresSaver.from_conn_string(DB_URL)
 checkpointer = checkpointer_cm.__enter__()
 checkpointer.setup()
+
 
 class SecurityMiddleware(AgentMiddleware):
 
@@ -75,6 +77,7 @@ class SecurityMiddleware(AgentMiddleware):
         return None
 
 
+
 agent = create_agent(
     model=model,
     tools=tools,
@@ -82,7 +85,7 @@ agent = create_agent(
     system_prompt=MODEL_SYSTEM_PROMPT,
     checkpointer=checkpointer,
     middleware=[
-        SecurityMiddleware(),
+        # SecurityMiddleware(),
         PIIMiddleware("email",strategy="redact",apply_to_input=True),PIIMiddleware(
             "credit_card",
             strategy="mask",
@@ -96,75 +99,6 @@ agent = create_agent(
         ),
     ]
 )
-
-def test_agent(question: str, user_id: str):
-
-    config = {
-        "configurable": {
-            "thread_id": user_id
-        }
-    }
-    
-    # Get previous conversation BEFORE this request
-    previous_state = agent.get_state(config)
-    previous_messages = previous_state.values.get(
-        "messages",
-        []
-    )
-
-    previous_count = len(previous_messages)
-
-    
-    # Run agent
-    output = agent.invoke(
-        {
-            "messages": [
-                HumanMessage(content=question)
-            ]
-        },
-        config=config,
-    )
-
-    messages = output["messages"]
-
-    
-    # Only messages from THIS request
-    current_messages = messages[previous_count:]
-
-    
-    # Tool outputs from THIS request
-    retrieval_context = [
-        message.content
-        for message in current_messages
-        if isinstance(message, ToolMessage)
-    ]
-
-    
-    # Tools called during THIS request
-    
-    tools_called = []
-
-    for message in current_messages:
-
-        if getattr(message, "tool_calls", None):
-
-            for tool_call in message.tool_calls:
-
-                tools_called.append({
-                    "name": tool_call["name"],
-                    "args": tool_call.get("args", {}),
-                })
-
-    
-    # Final response
-
-    return {
-        "answer": messages[-1].content,
-        "retrieval_context": retrieval_context,
-        "tools_called": tools_called,
-    }
-
-
 
 # STREAMING
 def stream_agent(question: str, user_id: str):
@@ -213,21 +147,107 @@ def stream_agent(question: str, user_id: str):
         # SecurityMiddleware rejection
         yield " Request rejected by security policy."
 
+# config = {
+#         "configurable": {
+#             "thread_id": "thread_1111"
+#         }
+#  }
+# output=agent.invoke({'messages':HumanMessage(content="When was NovaTech Solutions founded and how many employees does it have?")},config=config)
+# print(output['messages'])
+
+
+def test_agent(question: str, user_id: str):
+    config = {
+        "configurable": {
+            "thread_id": user_id
+        }
+    }
+
+    # 1. Get the state BEFORE this request
+    previous_state = agent.get_state(config)
+    previous_messages = previous_state.values.get("messages", [])
+
+    previous_ids = {
+        message.id
+        for message in previous_messages
+        if getattr(message, "id", None)
+    }
+
+    # print("Previous message count:", len(previous_messages))
+
+    # 2. Run the agent
+    output = agent.invoke(
+        {
+            "messages": [
+                HumanMessage(content=question)
+            ]
+        },
+        config=config,
+    )
+
+    messages = output["messages"]
+
+    # print("Total message count:", len(messages))
+
+    # 3. Only messages created during THIS invocation
+    current_messages = [
+        message
+        for message in messages
+        if getattr(message, "id", None) not in previous_ids
+    ]
+
+    # print("Current message count:", len(current_messages))
+
+    # 4. Get retrieval/tool output from THIS invocation
+    retrieval_context = [
+        message.content
+        for message in current_messages
+        if isinstance(message, ToolMessage)
+    ]
+
+    # 5. Get tools called during THIS invocation
+    tools_called = []
+
+    for message in current_messages:
+        if isinstance(message, AIMessage):
+            for tool_call in message.tool_calls or []:
+                tools_called.append({
+                    "name": tool_call["name"],
+                    "args": tool_call.get("args", {}),
+                    "id": tool_call.get("id"),
+                })
+
+    # 6. Get final AI response
+    final_message = next(
+        (
+            message
+            for message in reversed(current_messages)
+            if isinstance(message, AIMessage)
+            and not message.tool_calls
+        ),
+        None,
+    )
+
+    return {
+        "answer": final_message.content if final_message else None,
+        "retrieval_context": retrieval_context,
+        "tools_called": tools_called,
+    }
 
 
 
 if __name__=="__main__":
     result = test_agent(
-        question="hi?",
-        user_id="test-agent-222",
+        question="When was NovaTech Solutions founded and how many employees does it have? ",
+        user_id="test-agfjnt-1dsdkfsf321",
     )
     # print(result)
-    # print(result['answer'][0]['text'])
+    # print(f"Answer:",result['answer'][0]['text'])
     # print("Retrieval Context",result['retrieval_context'])
     # print("Tools Called",result['tools_called'])
     # print(result['answer'][0]['text'])
     # for chunk in stream_agent(
-    #         question="hi?",
+    #         question="list event on calendar for tommorrow?",
     #         user_id="test-agent-4",
     #     ):
     #         print(chunk,end="",flush=True)

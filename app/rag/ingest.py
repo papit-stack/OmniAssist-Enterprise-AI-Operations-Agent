@@ -10,15 +10,16 @@ load_dotenv()
 
 #embeddings
 embeddings=HuggingFaceEmbeddings(model_name=EMBEDDING_MODEL)
+#splitter
+text_splitter=RecursiveCharacterTextSplitter(chunk_size=CHUNK_SIZE,chunk_overlap=CHUNK_OVERLAP)
 
 def ingest():
     """Load, split, embed and save documents"""
+
     #document loader
     loader=DirectoryLoader("app/data",glob="*.txt",loader_cls=TextLoader)
     documents=loader.load()
 
-    #splitter
-    text_splitter=RecursiveCharacterTextSplitter(chunk_size=CHUNK_SIZE,chunk_overlap=CHUNK_OVERLAP)
     chunks=text_splitter.split_documents(documents)
     for idx,doc in enumerate(chunks):
         doc.metadata['chunk_id']=idx
@@ -30,5 +31,36 @@ def ingest():
     print(f"Chunk: {len(chunks)}")
     print(f"Vector store saved at: {VECTOR_STORE_PATH}")
 
+def add_new_document(file_path):
+    """Add only a new document to existing vector store."""
+
+    # Load ONLY the new document
+    loader=TextLoader(file_path)
+    documents=loader.load()
+
+    # Split ONLY the new document
+    chunks=text_splitter.split_documents(documents)
+
+    vector_store=FAISS.load_local(VECTOR_STORE_PATH,embeddings,allow_dangerous_deserialization=True)
+
+    old_chunk=list(vector_store.docstore._dict.values())
+
+    for idx,doc in enumerate(chunks):
+        print(f"Document: {idx}")
+        doc.metadata['chunk_id']=len(old_chunk)+idx
+        doc.metadata["source"] = file_path
+        # print(doc,"\n")
+
+    # print(old_chunk)
+    # Embed and add ONLY new chunks
+    vector_store.add_documents(chunks)
+
+    # Save updated vector store
+    vector_store.save_local(VECTOR_STORE_PATH)
+    
+    print(f"Added {len(chunks)} new chunks")
+
+
 if __name__=="__main__":
     ingest()
+    # add_new_document('app/data/10_learning_and_development.txt')
