@@ -1,8 +1,8 @@
 from deepeval.metrics import ToolCorrectnessMetric
 from deepeval.test_case import LLMTestCase, ToolCall
-from deepeval import assert_test,evaluate
+from deepeval import evaluate
 from app.evaluation.tool_eval_dataset import TOOL_EVAL_CASES
-from app.agents.new_agent import test_agent
+from app.agents.agent import test_agent
 from deepeval.models import GeminiModel
 import json
 import os

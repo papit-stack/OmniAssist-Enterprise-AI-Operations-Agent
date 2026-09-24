@@ -23,11 +23,9 @@ def search_company_policies(
     context, metadata = use_retriever(
         rewritten_query
     )
+    # print(rewritten_query)
 
     return f"""
-    Rewritten query:
-    {rewritten_query}
-
     Evidence:
     {context}
 

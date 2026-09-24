@@ -1,10 +1,11 @@
 from dotenv import load_dotenv
-from langchain.chat_models import init_chat_model
 from langchain_core.messages import AnyMessage,HumanMessage,SystemMessage
 from app.prompt import QUERY_REWRITER_PROMPT
-from app.config import (GEMINI_MODEL,MODEL_PROVIDER)
+from app.models import get_chat_model
 load_dotenv()
-model=init_chat_model(model=GEMINI_MODEL,model_provider=MODEL_PROVIDER)
+
+#initialize model
+model=get_chat_model()
 
 def rewrite_query(query:str,history: list[AnyMessage])->str:
     """Rewrite the user query using conversation context for better retrieval."""
