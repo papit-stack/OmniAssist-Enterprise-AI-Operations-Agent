@@ -1,7 +1,7 @@
 from dotenv import load_dotenv
 from langchain_core.messages import AnyMessage,HumanMessage,SystemMessage
-from app.prompt import QUERY_REWRITER_PROMPT
-from app.models import get_chat_model
+from app.backend.prompt import QUERY_REWRITER_PROMPT
+from app.backend.models import get_chat_model
 load_dotenv()
 
 #initialize model

@@ -7,9 +7,9 @@ from deepeval.metrics import (
 )
 from deepeval.test_case import LLMTestCaseParams
 from deepeval.models import GeminiModel
-from app.evaluation.eval_dataset import test_cases
-from app.agents.agent import test_agent
-from app.config import GEMINI_MODEL
+from app.backend.evaluation.eval_dataset import test_cases
+from app.backend.agents.agent import test_agent
+from app.backend.config import GEMINI_MODEL
 import json
 
 

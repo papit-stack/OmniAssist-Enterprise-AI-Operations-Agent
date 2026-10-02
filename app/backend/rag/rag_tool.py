@@ -1,8 +1,8 @@
 from langchain_core.tools import tool
 from langchain.tools import ToolRuntime
 
-from app.rag.retriever import use_retriever
-from app.rag.query_rewriter import rewrite_query
+from app.backend.rag.retriever import use_retriever
+from app.backend.rag.query_rewriter import rewrite_query
 # from app.rag.generator import generate_answer
 
 

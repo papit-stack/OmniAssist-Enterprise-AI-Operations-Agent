@@ -1,7 +1,6 @@
 from fastapi import HTTPException,APIRouter
 from fastapi.responses import StreamingResponse
-from app.agents.agent import stream_agent
-
+from app.backend.agents.agent import stream_agent
 from pydantic import BaseModel,Field
 router=APIRouter()
 
@@ -14,7 +13,6 @@ def chat(request: ChatRequest):
     try:
         def generate():
             for chunk in stream_agent(request.query,request.user_id):
-                # print("CHUNK:", repr(chunk), flush=True)
                 yield chunk
         return StreamingResponse(
             generate(),
@@ -27,5 +25,3 @@ def chat(request: ChatRequest):
             status_code=500,
             detail="Unable to process the request."
         )
-
-

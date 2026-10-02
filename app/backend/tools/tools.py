@@ -1,8 +1,8 @@
 from langchain_core.tools import tool
 import datetime
 # from langchain_tavily import TavilySearch
-from app.tools.calendar_tools import calendar_tools
-from app.rag.rag_tool import search_company_policies
+from app.backend.tools.calendar_tools import calendar_tools
+from app.backend.rag.rag_tool import search_company_policies
 from dotenv import load_dotenv
 load_dotenv()
 

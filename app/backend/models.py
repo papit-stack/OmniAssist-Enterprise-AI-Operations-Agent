@@ -1,6 +1,6 @@
 from langchain.chat_models import init_chat_model
 
-from app.config import (
+from app.backend.config import (
     GEMINI_MODEL,
     MODEL_PROVIDER,
     GROQ_MODEL,

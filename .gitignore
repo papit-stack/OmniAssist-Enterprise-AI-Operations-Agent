@@ -6,6 +6,8 @@ credentials.json
 token.json
 .vscode
 .pytest_cache
+Dockerfile
+
 
 .deepeval/.temp-deepeval-cache.json
 .deepeval/.temp_test_run_data.json

@@ -1,11 +1,11 @@
 from deepeval import evaluate
 from deepeval.test_case import LLMTestCase
-from app.evaluation.eval_dataset import test_cases
+from app.backend.evaluation.eval_dataset import test_cases
 from deepeval.metrics import ContextualPrecisionMetric,ContextualRecallMetric
-from app.config import GEMINI_MODEL
+from app.backend.config import GEMINI_MODEL
 from deepeval.models import GeminiModel,OpenAIModel,OllamaModel
 import os
-from app.rag.retriever import use_retriever
+from app.backend.rag.retriever import use_retriever
 
 # Local Ollama judge
 judge_model = OllamaModel(
