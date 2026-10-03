@@ -3,7 +3,7 @@ import uuid
 import streamlit as st
 import httpx
 
-API_URL = "http://127.0.0.1:8000/api/v1/chat"
+API_URL =  "http://127.0.0.1:8000/api/v1/chat"
 
 st.title("NovaTech - Internal Company Assistant")
 

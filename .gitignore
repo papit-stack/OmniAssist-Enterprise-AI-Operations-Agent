@@ -2,15 +2,19 @@ venv/
 .env
 __pycache__/
 *.pyc
+
 credentials.json
 token.json
-.vscode
-.pytest_cache
-Dockerfile
 
+.vscode/
+.pytest_cache/
+.deepeval/
 
-.deepeval/.temp-deepeval-cache.json
-.deepeval/.temp_test_run_data.json
-.deepeval/.latest_test_run.json
-.deepeval/.deepeval-cache.json
-.deepeval/.latest_run_full.json
+# Environment / secrets
+.env.*
+!.env.example
+
+# Generated retrieval / evaluation artifacts
+bm25_chunks.json
+test_cases.json
+tool_test_cases.json

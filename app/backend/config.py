@@ -1,10 +1,10 @@
-EMBEDDING_MODEL="sentence-transformers/all-MiniLM-L6-v2"
+import os
 
-VECTOR_STORE_PATH = "./vector_db_faiss"
+EMBEDDING_MODEL="sentence-transformers/all-MiniLM-L6-v2"
 
 COLLECTION_NAME = "documents"
 
-QDRANT_URL = "http://localhost:6333"
+QDRANT_URL = os.getenv("QDRANT_URL", "http://localhost:6333")
 
 
 CHUNK_SIZE=1000

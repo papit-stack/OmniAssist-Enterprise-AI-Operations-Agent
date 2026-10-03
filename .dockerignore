@@ -6,6 +6,9 @@ __pycache__/
 .git/
 .vscode/
 .env
+credentials.json
+token.json
+app/credentials.json
 
 test_cases.json
 tool_test_cases.json

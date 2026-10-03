@@ -149,8 +149,8 @@ def stream_agent(question: str, user_id: str):
 
     except SecurityPolicyError:
         yield "Request rejected by security policy."
-    except Exception:
-        yield "Sorry, I couldn't complete that request. Please try again."
+    except Exception as e:
+        yield f"Sorry, I couldn't complete that request. Please try again. {e}"
 
 
 def test_agent(question: str, user_id: str):
